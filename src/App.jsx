@@ -47,6 +47,26 @@ const menuItems = [
 
 const categories = ["All", "Loaded Tea", "Protein Shake", "Protein Coffee"]
 const pickupTimes = ["ASAP", "30 min", "45 min", "1 hr"]
+const drinkBenefits = [
+  {
+    title: "Loaded Teas",
+    accent: "blue",
+    stats: ["85–225mg caffeine", "0g sugar", "Vitamins C, B6 & B12"],
+    benefits: ["Healthy energy", "Boosts metabolism", "Mental focus"],
+  },
+  {
+    title: "Protein Shakes",
+    accent: "pink",
+    stats: ["220 calories", "24g protein", "9g sugar"],
+    benefits: ["Low carb meal replacement", "Tastes like ice cream"],
+  },
+  {
+    title: "Protein Coffee",
+    accent: "yellow",
+    stats: ["100 calories", "15g protein", "80mg caffeine", "1g sugar"],
+    benefits: ["Protein + energy", "Easy grab-and-go", "Smooth coffee flavor"],
+  },
+]
 
 function getAccent(item) {
   if (item.accent === "pink") {
@@ -251,6 +271,63 @@ const canSubmit =
           <p className="text-base text-zinc-700 md:text-lg">
             Quick energy, refreshing flavors, and high-protein options right next to Crunch Fitness.
           </p>
+        </div>
+      </section>
+
+      <section className="px-4 py-14 md:px-6 md:py-20">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-xs font-black uppercase tracking-[0.25em] text-blue-700 md:text-sm md:tracking-[0.3em]">
+            Nutrition & Benefits
+          </p>
+
+          <h2 className="mt-2 text-3xl font-black md:text-4xl">
+            Pick your kind of energy
+          </h2>
+
+          <div className="mt-7 grid gap-4 md:grid-cols-3">
+            {drinkBenefits.map((drink) => {
+              const color =
+                drink.accent === "pink"
+                  ? "text-pink-500 bg-pink-100 border-pink-200"
+                  : drink.accent === "yellow"
+                  ? "text-amber-500 bg-amber-100 border-amber-200"
+                  : "text-blue-700 bg-blue-100 border-blue-200"
+
+              return (
+                <div
+                  key={drink.title}
+                  className="rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm"
+                >
+                  <div className={`rounded-2xl border p-4 ${color}`}>
+                    <h3 className="text-2xl font-black">{drink.title}</h3>
+                  </div>
+
+                  <div className="mt-5 grid gap-2">
+                    {drink.stats.map((stat) => (
+                      <div
+                        key={stat}
+                        className="rounded-2xl bg-zinc-50 px-4 py-3 text-sm font-black text-zinc-800"
+                      >
+                        {stat}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5">
+                    <p className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">
+                      Benefits
+                    </p>
+
+                    <ul className="mt-3 grid gap-2 text-sm font-bold text-zinc-700">
+                      {drink.benefits.map((benefit) => (
+                        <li key={benefit}>• {benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </section>
 
