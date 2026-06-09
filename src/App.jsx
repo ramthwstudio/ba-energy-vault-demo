@@ -104,11 +104,16 @@ export default function App() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [notes, setNotes] = useState("")
   const [orderSubmitted, setOrderSubmitted] = useState(false)
+  const [showAllMenu, setShowAllMenu] = useState(false)
 
-  const filteredItems =
+  const categoryItems =
     activeCategory === "All"
       ? menuItems
       : menuItems.filter((item) => item.category === activeCategory)
+
+  const filteredItems = showAllMenu
+    ? categoryItems
+    : categoryItems.slice(0, 6)
 
   const addToOrder = (item) => {
     setOrder((current) => {
@@ -261,7 +266,10 @@ const canSubmit =
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category)
+                  setShowAllMenu(false)
+                }}
                 className={`cursor-pointer rounded-full border-2 px-4 py-2 text-xs font-black uppercase transition duration-300 hover:-translate-y-1 active:scale-[0.98] md:px-5 md:py-3 md:text-sm ${
                   activeCategory === category
                     ? "border-blue-700 bg-blue-700 text-white"
@@ -330,6 +338,7 @@ const canSubmit =
               )
             })}
           </div>
+          <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"></div>
         </div>
       </section>
 
