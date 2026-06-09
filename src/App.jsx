@@ -537,7 +537,7 @@ const canSubmit =
             <p className="mt-1 text-lg font-black text-white">
               {order.length > 0
                 ? `${itemCount} item${itemCount !== 1 ? "s" : ""}`
-                : "Build Your Drink"}
+                : "Order Summary"}
             </p>
           </div>
 
