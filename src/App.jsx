@@ -100,6 +100,9 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState("All")
   const [order, setOrder] = useState([])
   const [pickupTime, setPickupTime] = useState("ASAP")
+  const [customerName, setCustomerName] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [notes, setNotes] = useState("")
 
   const filteredItems =
     activeCategory === "All"
@@ -136,6 +139,11 @@ export default function App() {
 
   const total = order.reduce((sum, item) => sum + item.price * item.qty, 0)
   const itemCount = order.reduce((sum, item) => sum + item.qty, 0)
+
+const canSubmit =
+  order.length > 0 &&
+  customerName.trim() !== "" &&
+  phoneNumber.trim() !== ""
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#fbf8f1] text-zinc-950">
@@ -416,24 +424,39 @@ export default function App() {
 
             <form className="mt-7 grid gap-4 md:mt-8">
               <input
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
                 className="rounded-xl border border-zinc-200 p-4 transition duration-300 focus:border-blue-700 focus:outline-none"
                 placeholder="Your name"
               />
 
               <input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 className="rounded-xl border border-zinc-200 p-4 transition duration-300 focus:border-blue-700 focus:outline-none"
                 placeholder="Phone number"
               />
 
               <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
                 className="min-h-28 rounded-xl border border-zinc-200 p-4 transition duration-300 focus:border-blue-700 focus:outline-none"
                 placeholder="Any customizations? Example: less ice, no whip, flavor swaps, extra protein, or pickup notes."
               />
 
               <button
                 type="button"
-                onClick={() => alert("Demo order submitted! In a live version, this would send directly to BA Energy Vault.")}
-                className="cursor-pointer rounded-full bg-blue-700 px-8 py-4 font-black uppercase text-white shadow-lg shadow-blue-700/20 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-800 hover:shadow-xl active:translate-y-0 active:scale-[0.98]"
+                disabled={!canSubmit}
+                onClick={() =>
+                  alert(
+                    "Demo order submitted! In a live version, this would send directly to BA Energy Vault."
+                  )
+                }
+                className={`rounded-full px-8 py-4 font-black uppercase text-white shadow-lg transition duration-300 active:translate-y-0 active:scale-[0.98] ${
+                  canSubmit
+                    ? "cursor-pointer bg-blue-700 shadow-blue-700/20 hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-800 hover:shadow-xl"
+                    : "cursor-not-allowed bg-zinc-300 shadow-none"
+                }`}
               >
                 Submit Demo Order 🥤
               </button>
