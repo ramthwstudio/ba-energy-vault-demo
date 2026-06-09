@@ -432,6 +432,7 @@ export default function App() {
 
               <button
                 type="button"
+                onClick={() => alert("Demo order submitted! In a live version, this would send directly to BA Energy Vault.")}
                 className="cursor-pointer rounded-full bg-blue-700 px-8 py-4 font-black uppercase text-white shadow-lg shadow-blue-700/20 transition duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-800 hover:shadow-xl active:translate-y-0 active:scale-[0.98]"
               >
                 Submit Demo Order 🥤
