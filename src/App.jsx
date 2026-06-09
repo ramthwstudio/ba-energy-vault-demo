@@ -275,7 +275,7 @@ const canSubmit =
         </div>
       </section>
 
-      <section className="px-4 py-8 md:px-6 md:py-12">
+      <section className="px-4 py-8 md:px-6 md:py-0 md:pt-12">
         <div className="mx-auto max-w-6xl rounded-3xl border border-zinc-200 bg-white p-4 shadow-sm md:p-6">
           <p className="text-xs font-black uppercase tracking-[0.25em] text-blue-700">
             Quick Nutrition
@@ -290,21 +290,58 @@ const canSubmit =
                   ? "text-amber-500"
                   : "text-blue-700"
 
+              const isActive = activeBenefit?.title === drink.title
+
               return (
                 <button
                   key={drink.title}
                   type="button"
-                  onClick={() => setActiveBenefit(drink)}
-                  className="flex cursor-pointer items-center justify-between gap-4 rounded-2xl bg-zinc-50 px-4 py-3 text-left transition hover:bg-zinc-100 active:scale-[0.98]"
+                  onClick={() =>
+                    window.innerWidth >= 768
+                      ? setActiveBenefit(isActive ? null : drink)
+                      : setActiveBenefit(drink)
+                  }
+                  className={`flex cursor-pointer flex-col gap-3 rounded-2xl bg-zinc-50 px-4 py-3 text-left transition-all duration-300 active:scale-[0.98] hover:bg-zinc-100 ${
+                    isActive ? "md:row-span-2 md:bg-white md:shadow-lg" : ""
+                  }`}
                 >
-                  <div>
-                    <p className={`font-black ${color}`}>{drink.title}</p>
-                    <p className="mt-1 text-xs font-bold text-zinc-500">
-                      {drink.stats.slice(0, 2).join(" • ")}
-                    </p>
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className={`font-black ${color}`}>{drink.title}</p>
+                      <p className="mt-1 text-xs font-bold text-zinc-500">
+                        {drink.stats.slice(0, 2).join(" • ")}
+                      </p>
+                    </div>
+
+                    <span className="text-xl font-black text-zinc-300">
+                      {isActive ? "×" : "→"}
+                    </span>
                   </div>
 
-                  <span className="text-xl font-black text-zinc-300">→</span>
+                  {isActive && (
+                    <div className="hidden border-t border-zinc-200 pt-3 md:block">
+                      <div className="grid gap-2">
+                        {drink.stats.map((stat) => (
+                          <div
+                            key={stat}
+                            className="rounded-xl bg-zinc-50 px-3 py-2 text-xs font-black text-zinc-800"
+                          >
+                            {stat}
+                          </div>
+                        ))}
+                      </div>
+
+                      <p className="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">
+                        Benefits
+                      </p>
+
+                      <ul className="mt-2 grid gap-1 text-xs font-bold text-zinc-700">
+                        {drink.benefits.map((benefit) => (
+                          <li key={benefit}>• {benefit}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </button>
               )
             })}
@@ -581,7 +618,7 @@ const canSubmit =
       </section>
 
       {activeBenefit && (
-        <div className="fixed inset-0 z-[60] flex items-end bg-black/40 p-4 backdrop-blur-sm md:items-center md:justify-center">
+        <div className="fixed inset-0 z-[60] flex items-end bg-black/40 p-4 backdrop-blur-sm md:hidden">
           <div className="w-full rounded-3xl bg-white p-6 shadow-2xl md:max-w-lg">
             <div className="flex items-start justify-between gap-4">
               <div>
