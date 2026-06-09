@@ -447,10 +447,13 @@ const canSubmit =
               <button
                 type="button"
                 disabled={!canSubmit}
-                onClick={() =>
-                  alert(
-                    "Demo order submitted! In a live version, this would send directly to BA Energy Vault."
-                  )
+                onClick={
+                  canSubmit
+                    ? () =>
+                        alert(
+                          "Demo order submitted! In a live version, this would send directly to BA Energy Vault."
+                        )
+                    : undefined
                 }
                 className={`rounded-full px-8 py-4 font-black uppercase text-white shadow-lg transition duration-300 active:translate-y-0 active:scale-[0.98] ${
                   canSubmit
