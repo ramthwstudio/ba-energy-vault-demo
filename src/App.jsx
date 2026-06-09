@@ -531,7 +531,7 @@ const canSubmit =
         <div className="relative flex items-center justify-between px-5 py-4">
           <div>
             <p className="text-[11px] font-black uppercase tracking-[0.18em] text-blue-100">
-              {order.length > 0 ? "Your Order" : "Ready to Order?"}
+              {order.length > 0 ? "Your Order" : "Ready to Checkout?"}
             </p>
 
             <p className="mt-1 text-lg font-black text-white">
