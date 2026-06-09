@@ -525,7 +525,7 @@ const canSubmit =
 
           <div className="text-right">
             <p className="text-[11px] font-black uppercase tracking-[0.18em] text-blue-100">
-              {order.length > 0 ? "Estimated" : "Tap Here"}
+              {order.length > 0 ? "Estimated" : ""}
             </p>
 
             <p className="mt-1 text-2xl font-black text-amber-300">
