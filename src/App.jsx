@@ -103,6 +103,7 @@ export default function App() {
   const [customerName, setCustomerName] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
   const [notes, setNotes] = useState("")
+  const [orderSubmitted, setOrderSubmitted] = useState(false)
 
   const filteredItems =
     activeCategory === "All"
@@ -432,7 +433,11 @@ const canSubmit =
 
               <input
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ""))}
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength="10"
                 className="rounded-xl border border-zinc-200 p-4 transition duration-300 focus:border-blue-700 focus:outline-none"
                 placeholder="Phone number"
               />
@@ -446,15 +451,11 @@ const canSubmit =
 
               <button
                 type="button"
-                disabled={!canSubmit}
-                onClick={
-                  canSubmit
-                    ? () =>
-                        alert(
-                          "Demo order submitted! In a live version, this would send directly to BA Energy Vault."
-                        )
-                    : undefined
-                }
+                onClick={() => {
+                  if (!canSubmit) return
+                  setOrderSubmitted(true)
+                }}
+                aria-disabled={!canSubmit}
                 className={`rounded-full px-8 py-4 font-black uppercase text-white shadow-lg transition duration-300 active:translate-y-0 active:scale-[0.98] ${
                   canSubmit
                     ? "cursor-pointer bg-blue-700 shadow-blue-700/20 hover:-translate-y-1 hover:scale-[1.02] hover:bg-blue-800 hover:shadow-xl"
@@ -463,6 +464,12 @@ const canSubmit =
               >
                 Submit Demo Order 🥤
               </button>
+
+              {orderSubmitted && (
+                <p className="rounded-xl bg-green-50 p-4 text-center text-sm font-bold text-green-700">
+                  Demo order submitted! In a live version, this would send directly to BA Energy Vault.
+                </p>
+              )}
 
               <p className="text-center text-xs text-zinc-500 md:text-sm">
                 Demo only — live version could send this to the shop and support online payment.
@@ -497,36 +504,36 @@ const canSubmit =
         </div>
       </section>
 
-      {order.length > 0 && (
-        <a
-          href="#order"
-          className="fixed bottom-4 left-4 right-4 z-50 overflow-hidden rounded-2xl border border-white/10 bg-blue-700/95 backdrop-blur-xl shadow-2xl shadow-blue-900/30 transition active:scale-[0.98] md:hidden"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent" />
+      <a
+        href="#order"
+        className="fixed bottom-4 left-4 right-4 z-50 overflow-hidden rounded-2xl border border-white/10 bg-blue-700/95 text-white shadow-2xl shadow-blue-900/30 backdrop-blur-xl transition active:scale-[0.98] md:left-auto md:right-6 md:w-80"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent" />
 
-          <div className="relative flex items-center justify-between px-5 py-4">
-            <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-blue-100">
-                Your Order
-              </p>
+        <div className="relative flex items-center justify-between px-5 py-4">
+          <div>
+            <p className="text-[11px] font-black uppercase tracking-[0.18em] text-blue-100">
+              {order.length > 0 ? "Your Order" : "Ready to Order?"}
+            </p>
 
-              <p className="mt-1 text-lg font-black text-white">
-                {itemCount} item{itemCount !== 1 ? "s" : ""}
-              </p>
-            </div>
-
-            <div className="text-right">
-              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-blue-100">
-                Total
-              </p>
-
-              <p className="mt-1 text-2xl font-black text-amber-300">
-                ${total}
-              </p>
-            </div>
+            <p className="mt-1 text-lg font-black text-white">
+              {order.length > 0
+                ? `${itemCount} item${itemCount !== 1 ? "s" : ""}`
+                : "Build Your Drink"}
+            </p>
           </div>
-        </a>
-      )}
+
+          <div className="text-right">
+            <p className="text-[11px] font-black uppercase tracking-[0.18em] text-blue-100">
+              {order.length > 0 ? "Estimated" : "Tap Here"}
+            </p>
+
+            <p className="mt-1 text-2xl font-black text-amber-300">
+              {order.length > 0 ? `$${total}` : "↓"}
+            </p>
+          </div>
+        </div>
+      </a>
 
       <footer className="px-6 pb-28 pt-8 text-center text-sm text-zinc-500 md:pb-8">
         Unofficial redesign concept created for demonstration purposes.
