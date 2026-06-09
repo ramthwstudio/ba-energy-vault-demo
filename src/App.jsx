@@ -338,7 +338,16 @@ const canSubmit =
               )
             })}
           </div>
-          <div className="mt-7 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"></div>
+          {categoryItems.length > 6 && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setShowAllMenu(!showAllMenu)}
+                className="cursor-pointer rounded-full border-2 border-blue-700 bg-white px-8 py-4 text-sm font-black uppercase text-blue-700 transition duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:text-white active:scale-[0.98]"
+              >
+                {showAllMenu ? "Show Less" : "View Full Menu"}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
